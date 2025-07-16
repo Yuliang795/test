@@ -1,4 +1,4 @@
-# Do LLMs Understand Constraint Programming? Zero-Shot Constraint Programming Model Generation Using LLMs
+## Do LLMs Understand Constraint Programming? Zero-Shot Constraint Programming Model Generation Using LLMs
 
 This repository contains materials for the paper:
  **"Do LLMs Understand Constraint Programming? Zero-Shot Constraint Programming Model Generation Using LLMs"**
