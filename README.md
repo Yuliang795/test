@@ -4,7 +4,7 @@ This repository contains materials for the paper:
  **"Do LLMs Understand Constraint Programming? Zero-Shot Constraint Programming Model Generation Using LLMs"**
  [Yuliang Song, Eldan Cohen, LION 19, 2025]
 
-📄 [Paper on OpenReview](https://openreview.net/your-paper-link)
+📄 [Paper on OpenReview](https://openreview.net/forum?id=6zlpzSKzqj)
 
 
 ------
