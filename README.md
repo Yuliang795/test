@@ -25,11 +25,11 @@ Each entry in the dataset JSON file corresponds to a problem instance, keyed by 
 Each problem is represented as a dictionary with the following fields:
 
 * **`source`**: Origin of the problem (e.g., `"csplib"`).
-* **`name`**: Descriptive name of the problem.
-* **`content`**: Full textual description of the problem statement.
+* **`name`**: Name of the problem.
+* **`content`**: Problem description.
 * **`value_info`**: Specification of the input parameters, including their meaning, type, and structure.
-* **`ref_sol_format`**: Specification of the expected output solution format, including variable names, types, sizes, and examples.
-* **`prob_type`**: Type of problem, e.g., `"cop"` (constraint optimization problem) or `"csp"` (constraint satisfaction problem).
+* **`ref_sol_format`**: Specification of the expected output solution format, including variable names, types, sizes, and optionaly examples.
+* **`prob_type`**: `"cop"` (constraint optimization problem) or `"csp"` (constraint satisfaction problem).
 
 ------
 
