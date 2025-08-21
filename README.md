@@ -16,11 +16,12 @@ This repository contains materials for the paper:
 ------
 
 ## CPEVAL Benchmark
+- The benchmark is stored in a single JSON file. 
+- The evaluation suite is provided in `cpeval.py`. 
+- The solution format checker is provided in `solution_checker.py`.
 
 ### 📂Dataset
-Each entry in the dataset JSON file corresponds to a problem instance, keyed by a **problem ID** as in CSPLib.
-
-Each problem is represented as a dictionary with the following fields:
+Each problem, keyed by a **problem ID** as in CSPLib, is represented as a dictionary with the following fields:
 
 * **`source`**: Origin of the problem (e.g., `"csplib"`).
 * **`name`**: Name of the problem.
