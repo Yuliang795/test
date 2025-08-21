@@ -43,6 +43,7 @@ The checker function returns results in two strings:
 
 ### 📏Output Format Checker
 Each problem has a dedicated output format checker function, named `prob<problem_id>_solformat_checker`, which verifies whether the generated solutions conform to the predefined formats. The core of this checking mechanism is relatively universal, but each problem has its own specific function to support customized requirements. 
+*Coming soon.*
 
 ------
 
