@@ -1,0 +1,13 @@
+n = 4;
+r = 1; % red
+ry = 2; % red-yellow
+g = 3; % green
+y = 4; % yellow
+
+allowed = array2d(1..4, 1..4, 
+[
+ r,r,g,g, 
+ ry,r,y,r, 
+ g,g,r,r, 
+ y,r,ry,r
+]);

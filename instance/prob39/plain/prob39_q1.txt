@@ -1,0 +1,4 @@
+num_pieces: 5
+num_players: 3
+duration: [4, 6, 3, 5, 7]
+rehearsal: [[1, 1, 0, 1, 0], [0, 1, 1, 0, 1], [1, 1, 0, 1, 1]]

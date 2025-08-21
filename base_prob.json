@@ -1,0 +1,615 @@
+{
+  "1": {
+    "source": "csplib",
+    "name": "Car Sequencing",
+    "content": "A number of cars are to be produced; they are not identical, because different options are available as variants on the basic model. The assembly line has different stations which install the various options (air-conditioning, sun-roof, etc.). These stations have been designed to handle at most a certain percentage of the cars passing along the assembly line. Furthermore, the cars requiring a certain option must not be bunched together, otherwise the station will not be able to cope. Consequently, the cars must be arranged in a sequence so that the capacity of each station is never exceeded. For instance, if a particular station can only cope with at most half of the cars passing along the line, the sequence must be built so that at most 1 car in any 2 requires that option. The problem has been shown to be NP-complete (Gent 1999).",
+    "value_info": [
+      "`numclasses`: The number of different classes of cars, given as an integer.\n`numoptions`: The number of different options available for the cars, given as an integer.\n`numcars`: The total number of cars to be produced, given as an integer.\n`numberPerClass`: The number of cars in each class, given as an array of integers of size `numclasses`.\n`optionsRequired`: The options required for each class, given as a 2D array of size `numclasses` by `numoptions`, where each element is either 1 (option required) or 0 (option not required).\n`windowSize`: The window size for each option, given as an array of integers of size `numoptions`. This defines the number of consecutive cars to consider when checking for option distribution.\n`optMax`: The maximum number of cars with a particular option in a block, given as an array of integers of size `numoptions`."
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`slot`: An array of integers representing the sequence of car classes. Each position in the array corresponds to a car, and the value at each position indicates the class of the car at that position in the sequence.",
+        "example": "For instance, if the solution is `[1, 2, 3]`, this means the car with class 1 will be processed first, followed by class 2, and then class 3. Another example: if the solution is `[1, 2, 3, 2, 1]`, the sequence involves class 1 first, then class 2, class 3, back to class 2, and finally class 1 again.",
+        "type": "List[int]",
+        "size": "[numcars]",
+        "index": "1-based"
+      }
+    },
+    "prob_type": "csp"
+  },
+  "2": {
+    "source": "csplib",
+    "name": "Template Design",
+    "content": "This problem arises from a colour printing firm which produces a variety of products from thin board, including cartons for human and animal food and magazine inserts. Food products, for example, are often marketed as a basic brand with several variations (typically flavours). Packaging for such variations usually has the same overall design, in particular the same size and shape, but differs in a small proportion of the text displayed and/or in colour. For instance, two variations of a cat food carton may differ only in that on one is printed 'Chicken Flavour' on a blue background whereas the other has 'Rabbit Flavour' printed on a green background. A typical order is for a variety of quantities of several design variations. Because each variation is identical in dimension, we know in advance exactly how many items can be printed on each mother sheet of board, whose dimensions are largely determined by the dimensions of the printing machinery. Each mother sheet is printed from a template, consisting of a thin aluminium sheet on which the design for several of the variations is etched. The problem is to decide, firstly, how many distinct templates to produce, and secondly, which variations, and how many copies of each, to include on each template. \nEach design of carton is made from an identically sized and shaped piece of board. Nine cartons can be printed on each mother sheet, and several different designs can be printed at once, on the same mother sheet. (Hence, at least 407,223 sheets of card will be required to satisfy these order quantities.)\nBecause in this example there are more slots in each template (9) than there are variations (7), it would be possible to fulfil the order using just one template. This creates an enormous amount of waste card, however. We can reduce the amount of waste by using more templates; with three templates, the amount of waste produced is negligible. The problem is therefore to produce template plans which will minimize the amount of waste produced, for 1 template, 2 templates,... and so on.\n\nIt is permissible to work in units of say 1000 cartons, so that the order quantities become 250, 255, etc.",
+    "value_info": [
+      "`S`: The number of slots per template, given as an integer.\n`t`: The number of templates, given as an integer.\n`n`: The number of variations, given as an integer.\n`d`: The number of copies required for each variation, given as an array of integers of size n."
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`template`: A 2-dimentional integer array of size (number of templates `t` by number of variations `n`) representing the slot allocations for each template. Each array element represents the number of slots occupied by a particular variation on that template.",
+        "example": "For instance, in the output `[[0, 0, 2, ...], [1, 1, 1, ...]]`, the first inner array corresponds to `template #1`. This means that on template 1, variation 3 occupies 2 slots, while the other variations do not occupy any slots on this template, and so on. Similarly, for `template #2: [1,1,2,...]`, variations 1 and 2 each occupies 1 slot, and variations 3 occupies 2 slots, and so on.",
+        "type": "List[List[int]]",
+        "size": "[t,n]"
+      },
+      "var2": {
+        "descr": "`pressings`: An integer array of size `number of variations`, representing the number of times each template is used to produce the required variations.",
+        "example": "For instance, if the output is `pressings=[3, 5]`, then for `template #1`, the pressings are 3, meaning that template 1 is used 3 times. For `template #2`, the pressings are 5, meaning template 2 is used 5 times.",
+        "type": "List[int]",
+        "size": "[t]"
+      }
+    },
+    "prob_type": "cop"
+  },
+  "3": {
+    "source": "csplib",
+    "name": "Quasigroup Existence",
+    "content": "An order m quasigroup is a Latin square of size m. That is, a $m \\times m$ multiplication table in which each element occurs once in every row and column. For example,\n\n```\n1\t 2\t 3\t 4\n4\t 1\t 2\t 3\n3\t 4\t 1\t 2\n2\t 3\t 4\t 1\n```\n\nis an order 4 quasigroup. A quasigroup can be specified by a set and a binary multiplication operator, \\* defined over this set.\nQuasigroup existence problems determine the existence or non-existence of quasigroups of a given size with additional properties. Certain existence problems are of sufficient interest that a naming scheme has been invented for them. We define two new relations, \\*321 and \\*312 by $a \\*321 b = c$ iff $c\\*b=a$ and $a \\*312 b = c$ iff $b\\*c=a$.\n\nQG1.m problems are order m quasigroups for which if $a\\*b=c$, $a\\*b=c\\*d$ and $a \\*321 b = c \\*321 d$ then $a=c$ and $b=d$.\n\nQG2.m problems are order m quasigroups for which if a\\*b=c\\*d and a \\*312 b = c \\*312 d then a=c and b=d.\n\nQG3.m problems are order m quasigroups for which $(a\\*b)\\*(b\\*a) = a$.\n\nQG4.m problems are order m quasigroups for which $(b\\*a)\\*(a\\*b) = a$.\n\nQG5.m problems are order m quasigroups for which $((b\\*a)\\*b)\\*b = a$.\n\nQG6.m problems are order m quasigroups for which $(a\\*b)\\*b = a\\*(a\\*b)$.\n\nQG7.m problems are order m quasigroups for which $(b\\*a)\\*b = a\\*(b\\*a)$.\n\nFor each of these problems, we may additionally demand that the quasigroup is idempotent. That is, a\\*a=a for every element a. You should consider the QG3.m problem for this task.",
+    "value_info": [
+      "`n`: The order of the quasigroup (size of the Latin square), given as an integer."
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`quasiGroup`: A 2D array representing the quasigroup matrix. Each entry ( quasiGroup[i, j] ) in the matrix specifies the result of the binary operation ( i * j ) in the quasigroup.",
+        "example": "For instance, the output `quasiGroup: [[0, 2, ...],[3, 1, ...], ...]` represents a 4x4 Latin square where, for example, quasiGroup[0, 1] = 2 and quasiGroup[1, 0] = 3 .",
+        "type": "List[List[int]]",
+        "size": "[n,n]",
+        "index": "0-based"
+      }
+    },
+    "prob_type": "csp"
+  },
+  "6": {
+    "source": "csplib",
+    "name": "Golomb rulers",
+    "content": "These problems are said to have many practical applications including sensor placements for x-ray crystallography and radio astronomy. A Golomb ruler may be defined as a set of $m$ integers $0 = a_1 < a_2 < ... < a_m$ such that the $m(m-1)/2$ differences $a_j - a_i, 1 <= i < j <= m$ are distinct. Such a ruler is said to contain m marks and is of length $a_m$. The objective is to find optimal (minimum length) or near optimal rulers. Note that a symmetry can be removed by adding the constraint that $a_2 - a_1 < a_m - a_{m-1}$, the first difference is less than the last.\n\nThere is no requirement that a Golomb ruler measures all distances up to its length - the only requirement is that each distance is only measured in one way. However, if a ruler does measure all distances, it is classified as a *perfect* Golomb ruler.",
+    "value_info": [
+      "`m`: The number of marks on the Golomb ruler, given as an integer."
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`mark`: An array representing the positions of the marks on the Golomb ruler. The first mark is always at position 0, and subsequent marks are positioned to ensure that all differences between marks are unique.",
+        "example": "For instance, in the output `[0, 1, 3]`, the marks are positioned at 0, 1, and 3 on the ruler. This means that the distances between the marks (1 and 2, in this case) are unique.",
+        "type": "List[int]",
+        "size": "[m]"
+      }
+    },
+    "prob_type": "cop"
+  },
+  "7": {
+    "source": "csplib",
+    "name": "All-Interval Series",
+    "content": "Given the twelve standard pitch-classes (c, c#, d, ...), represented by numbers 0,1,...,11, find a series in which each pitch-class occurs exactly once and in which the musical intervals between neighbouring notes cover the full set of intervals from the minor second (1 semitone) to the major seventh (11 semitones). That is, for each of the intervals, there is a pair of neighbouring pitch-classes in the series, between which this interval appears.\n\nThe problem of finding such a series can be easily formulated as an instance of a more general arithmetic problem on $\\mathbb Z_n$, the set of integer residues modulo $n$. Given $n \\in \\mathbb N$, find a vector $s = (s_1, ..., s_n)$, such that\n\n1. $s$ is a permutation of $\\mathbb Z_n = \\{0,1,...,n-1\\}$; and\n2. the interval vector $v = (|s_2-s_1|, |s_3-s_2|, ... |s_n-s_{n-1}|)$ is a permutation of $ \\mathbb Z_n \\setminus \\\\{0\\\\} = \\\\{1,2,...,n-1\\\\}$.\n\nA vector $v$ satisfying these conditions is called an all-interval series of size $n$; the problem of finding such a series is the all-interval series problem of size $n$.",
+    "value_info": [
+      "`n`: The size of the series, given as an integer."
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`series`: An array representing the sequence of pitch-classes, where each pitch-class occurs exactly once, and the absolute differences between consecutive elements cover all possible intervals from 1 to ( n-1 ).",
+        "example": " In the output `[i, j, k, l, ...]`, the differences between consecutive elements (i-j, j-k, k-l, ...) form a permutation of the set {1, 2, ..., n-1}.",
+        "type": "List[int]",
+        "size": "[n]"
+      }
+    },
+    "prob_type": "csp"
+  },
+  "8": {
+    "source": "csplib",
+    "name": "Vessel Loading",
+    "content": "Supply vessels transport containers from site to site. The deck area is rectangular. Containers are cuboid, and are laid out in a single layer. All containers are positioned parallel to the sides of the deck. The contents of the containers determine their class. Certain classes of containers are constrained to be separated by minimum distances either along the deck or across the deck. \n\nThe vessel loading decision problem is to determine whether a given set of containers can be positioned on a given deck, without overlapping, and without violating any of the separation constraints. The problem can be modelled as packing of a set of rectangles into a larger rectangle, subject to constraints.",
+    "value_info": [
+      "`deck_width`: The width of the deck, given as an integer.\n`deck_length`: The length of the deck, given as an integer.\n`n_containers`: The number of containers, given as an integer.\n`n_classes`: The number of container classes, given as an integer.\n`width`: The widths of the containers, given as an array of integers, where `width[c]` is the width of container `c`.\n`length`: The lengths of the containers, given as an array of integers, where `length[c]` is the length of container `c`.\n`classes`: The classes of the containers, given as an array of integers, where `classes[c]` is the class of container `c`.\n`separation`: The minimum allowed separation between containers of different classes, given as a 2D array of integers, where `separation[a, b]` is the minimum separation between containers of class `a` and class `b`."
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`left`: An array representing the leftmost coordinates of the containers on the deck. Each element `Left[c]` specifies the horizontal position of the left edge of container `c`",
+        "example": "For instance, in the output `Left = [0, 3, 0]`, container 1 starts at the left edge (0), container 2 starts at position 3, and container 3 starts at position 0.",
+        "type": "List[int]",
+        "size": "[n_containers]"
+      },
+      "var2": {
+        "descr": "`right`:An array representing the rightmost coordinates of the containers on the deck. Each element `Right[c]` specifies the horizontal position of the right edge of container `c`.",
+        "example": "For instance, in the output `Right = [5, 5, 3]`, container 1 extends to position 5, container 2 also extends to position 5, and container 3 extends to position 3.",
+        "type": "List[int]",
+        "size": "[n_containers]"
+      },
+      "var3": {
+        "descr": "`bottom`: An array representing the bottommost coordinates of the containers on the deck. Each element `Bottom[c]` specifies the vertical position of the bottom edge of container `c`.",
+        "example": "For instance, in the output `Bottom = [4, 0, 0]`, container 1 starts at position 4, while containers 2 and 3 both start at the bottom edge (position 0).",
+        "type": "List[int]",
+        "size": "[n_containers]"
+      },
+      "var4": {
+        "descr": "`top`: An array representing the topmost coordinates of the containers on the deck. Each element `Top[c]` specifies the vertical position of the top edge of container `c`.",
+        "example": "For instance, in the output `Top = [5, 4, 4]`, container 1 extends to position 5, and containers 2 and 3 both extend to position 4.",
+        "type": "List[int]",
+        "size": "[n_containers]"
+      },
+      "var5": {
+        "descr": "`orientation`: An array indicating the orientation of each container. A value of 1 indicates the container is placed in its default orientation, and a value of 2 indicates the container is rotated by 90 degrees.",
+        "example": "For instance, in the output `orientation = [1, 1, 1]`, all containers are placed in their default orientation (no rotation).",
+        "type": "List[int]",
+        "size": "[n_containers]"
+      }
+    },
+    "prob_type": "csp"
+  },
+  "10": {
+    "source": "csplib",
+    "name": "Social Golfers Problem",
+    "content": "The coordinator of a local golf club has come to you with the following problem. In their club, there are a number of social golfers (e.g., 32), each of whom play golf once a week, and always in groups of 4. They would like you to come up with a schedule of play for these golfers, to last as many weeks as possible, such that no golfer plays in the same group as any other golfer on more than one occasion.",
+    "value_info": [
+      "`n_groups`: The number of groups per round, given as an integer.\n`n_per_group`: The size of each group, given as an integer.\n`n_rounds`: The total number of rounds (weeks), given as an integer."
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`schedule`: A nested list where each element represents a round, and each round contains groups of golfers. Each group is represented as a list of golfer IDs.",
+        "example": "For instance, the output, `schedule=[[[1, 3],[2, 4]], [[1, 2],[3, 4]], [[.., ..],[.., ..]], ...]`, indicates that in the first round, golfers 1 and 3 are in one group, and golfers 2 and 4 are in another group. In the second round, golfers 1 and 2 are in one group, and golfers 3 and 4 are in another group, and so on.",
+        "type": "List[List[List[int]]]",
+        "size": "[n_rounds,n_groups,n_per_group]",
+        "index": "1-based"
+      }
+    },
+    "prob_type": "csp"
+  },
+  "12": {
+    "source": "csplib",
+    "name": "Nonogram",
+    "content": "Nonograms are a popular puzzle, which goes by different names in different countries. Solvers have to shade in squares in a grid so that blocks of consecutive shaded squares satisfy constraints given for each row and column. Constraints typically indicate the sequence of shaded blocks (e.g. 3,1,2 means that there is a block of 3, then a gap of unspecified size, a block of length 1, another gap, and then a block of length 2).",
+    "value_info": [
+      "`rows`: The number of rows in the Nonogram grid, given as an integer.\n`row_rule_len`: The length of the rule sequence for each row, given as an integer.\n`row_rules`: The block constraints for each row, given as a 2D array of integers with size `rows` by `row_rule_len`. Each row contains the sequence of block lengths for that row.\n`cols`: The number of columns in the Nonogram grid, given as an integer.\n`col_rule_len`: The length of the rule sequence for each column, given as an integer.\n`col_rules`: The block constraints for each column, given as a 2D array of integers with size `cols` by `col_rule_len`. Each column contains the sequence of block lengths for that column."
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`grid`: A 2D matrix with size `rows` by `cols` representing the Nonogram solution. Each entry in the matrix is either 0 (unshaded) or 1 (shaded).",
+        "example": "For instance, in the output grid = [[1, 0, 1], [0, 1, 1], [...]], this is a partial solution of a 3x3 Nonogram. The first row has two shaded blocks of length 1 indicating a row rule of [1,1] or [0,1,1] if padded. The second row has one block of length 2, indicating a row rule of [2], or [0,0,2] if padded.",
+        "type": "List[List[int]]",
+        "size": "[rows,cols]"
+      }
+    },
+    "prob_type": "csp"
+  },
+  "14": {
+    "source": "csplib",
+    "name": "Solitaire Battleships",
+    "content": "The Battleships puzzle is occasionally published in Games Magazine (US), e.g. in the August 1998 issue where it is credited to Mark Gottlieb. It is loosely based on the two person pencil and paper game. I quote the puzzle description in the magazine:\n\nThis fleet consists of one battleship (four grid squares in length), two cruisers (each three grid squares long), three three destroyers (each two squares long) and four submarines (one square each). The ships may be oriented horizontally or vertically, and no two ships will occupy adjacent grid squares, not even diagonally. The digits along the right side of and below the grid indicate the number of grid squares in the corresponding rows and columns that are occupied by vessels.\n\nIn each of the puzzles, one or more `shots` have been taken to start you off. These may show water (indicated by wavy lines), a complete submarine (a circle), or the middle (a square), or the end (a rounded-off square) of a longer vessel.\n\nHere is an example problem, the first from that issue of the magazine:\n\n<pre>\n-------------------\n0|                   |\n2|                   |\n3|                   |\n1|                   |\n2|                   |\n4|                   |\n2|                   |\n1|o                  |\n2|                   |\n3|                   |\n--------------------\n1 3 3 1 5 1 2 4 0 0\n</pre>\n\nThe \"o\" in the grid indicates a submarine must occupy that square.\nPublished puzzles all have a grid of 10x10 and the ships as described above.",
+    "value_info": [
+      "`width`: The number of rows of the board, given as an integer.\n`height`: The number of columns of the board, given as an integer.\n`maxship`: The maximal length of a ship, given as an integer.\n`hint`: The initial board configuration, given as a 2D array of size `width` by `height`, with values ranging from 0 to 7.\n`rowsum`: The sums for each row, given as an array of integers of size `width`.\n`colsum`: The sums for each column, given as an array of integers of size `height`.\n`ship`: The number of each type of ship, given as an array of integers of size `maxship`."
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`grid`: A 2D matrix representing the grid, where each cell contains one of the following ship parts: `.` represents water; `c` represents a submarine,; `l`, `r`, `t`, `b`, `m` represent the parts of larger ships (left, right, top, bottom, and middle, respectively).",
+        "example": "For instance, in the output `grid=\\nlmmmr..t.\\n.......m.\\n.c.....b.\\n`, each line represents a row of the grid, the first row started with a ship with parts 'lmmmr', and the last column contains a ship with parts 'tmb'.",
+        "type": "List[List[str]]",
+        "size": "[width,height]"
+      }
+    },
+    "prob_type": "csp"
+  },
+  "15": {
+    "source": "csplib",
+    "name": "Schur's Lemma",
+    "content": "The problem is to put $n$ balls labelled ${1,...,n}$ into 3 boxes so that for any triple of balls $(x,y,z)$ with $x+y=z$, not all are in the same box. This has a solution iff $n < 14$.\nThe problem can be formulated as an 0-1 problem using the variables, $M_{ij}$ for $i \\in {1,...,n}, j \\in {1,2,3}$ with $M_{ij}$ true iff ball $i$ is in box $j$. The constraints are that a ball must be in exactly one box, $M_{i1} + M_{i2} + M_{i3} = 1$ for all $i \\in {1,...,n}$. And for each $x+y=z$ and $j \\in {1,2,3}$, not $(M_{xj} \\wedge M_{yj} \\wedge M_{zj}$). This converts to, $(1-M_{xj}) + (1-M_{yj}) + (1-M_{zj}) \\geq 1$ or, $M_{xj} + M_{yj} + M_{zj} \\leq 2$.",
+    "value_info": [
+      "`n`: The number of balls, given as an integer.\n`c`: The number of boxes, given as an integer."
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`box`: An array representing the box assignment for each ball. The value at index `i` in the array indicates the box to which ball `i` is assigned. ",
+        "example": "For instance, in the output `box = [1, 3, 1, ...]`, ball#1 is in box 1, ball#2 is in box 3, ball#3 is in box 1, and so on. The value of each entry is between 1 and number of boxes `c`.",
+        "type": "List[int]",
+        "size": "[n]",
+        "index": "1-based"
+      }
+    },
+    "prob_type": "csp"
+  },
+  "16": {
+    "source": "csplib",
+    "name": "Traffic Lights",
+    "content": "Consider a four way traffic junction with eight traffic lights. Four of the traffic lights are for the vehicles and can be represented by the variables V1 to V4 with domains {r,ry,g,y} (for red, red-yellow, green and yellow). The other four traffic lights are for the pedestrians and can be represented by the variables P1 to P4 with domains {r,g}.\nThe constraints on these variables can be modelled by quaternary constraints on (Vi, Pi, Vj, Pj ) for $1\\leq i\\leq 4, j=(1+i)\\ mod\\ 4$ which allow just the tuples {(r,r,g,g), (ry,r,y,r), (g,g,r,r), (y,r,ry,r)}.\n\nWe are interested in the set of all globally consistent 8-tuples (which reflects the evolution of the traffic light sequence).",
+    "value_info": [
+      "`n`: The number of states, given as an integer.\n`r`: The integer representation for the color red.\n`ry`: The integer representation for the color red-yellow.\n`g`: The integer representation for the color green.\n`y`: The integer representation for the color yellow.\n`allowed`: The allowed transitions for the traffic lights, given as a 2D array of size 4x4 containing integers that represents traffic light color. The tuples represent valid combinations of traffic light states for vehicles and pedestrians at the junction."
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`V`: An array of integers representing the state of the vehicle traffic lights at the four junctions. Each element of the array is one of the integers representing the states r, ry, g, or y for the vehicle lights.",
+        "example": "For instance, in the output `V=[4, 2, ...]`, `V1` is in state 4 (yellow),`V2` is in state 2 (red-yellow), and so on",
+        "type": "List[int]",
+        "size": "[n]"
+      },
+      "var2": {
+        "descr": "`P`: An array of integers representing the state of the pedestrian traffic lights at the four junctions. Each element of the array is one of the integers representing the states `r` or `g` for the pedestrian lights.",
+        "example": "For instance, in the output `P=[1, 1, ...]`, `P1` is in state 1 (red),`P2` is in state 1 (red), and so on.",
+        "type": "List[int]",
+        "size": "[n]"
+      }
+    },
+    "prob_type": "csp"
+  },
+  "18": {
+    "source": "csplib",
+    "name": "Water Bucket Problem",
+    "content": "You are given an 8 pint bucket of water, and two empty buckets which can contain 5 and 3 pints respectively. You are required to divide the water into two by pouring water between buckets (that is, to end up with 4 pints in the 8 pint bucket, and 4 pints in the 5 pint bucket).\n\nWhat is the minimum number of transfers of water between buckets? ",
+    "value_info": [
+      "`n_states`: The number of unique water configurations (states), given as an integer.\n`input_max`: The maximum number of pints that can be transferred in a single operation, given as an integer.\n`initial_state`: The ID of the initial configuration, given as an integer.\n`accepting_states`: A set of state IDs that represent goal configurations, given as a set of integers.\n`transition_fn`: A 2D array of shape (`n_states`, `input_max`). Each entry `transition_fn[q, a]` represents the resulting state when an input action `a` is applied to state `q`. A value of 0 means the transition is not allowed for that action from that state.\n`nodes`: A list of strings where each string represents a unique configuration of the three buckets, formatted as `'i, j, k'`, indicating the amount of water in pints respectively. The index of each string corresponds to the state's ID, starting from 1."
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`cost`: The total number of water transfers required to reach the goal state from the initial state.",
+        "example": "For instance, if the output is `cost: 8`, it indicates that 8 transfers are needed to achieve the desired water distribution.",
+        "type": "int",
+        "size": ""
+      },
+      "var2": {
+        "descr": "`sequence_of_states`:  The sequence of states representing the sequence of bucket configurations from the initial state to the goal state, one per transfer.",
+        "example": "For instance, if the output is `[1, 3, 7, ...]`, these IDs map to states in the `nodes` array. The transitions represent the sequence of water distributions that lead from the initial state to the goal state.",
+        "type": "List[int]",
+        "size": ""
+      }
+    },
+    "prob_type": "cop"
+  },
+  "19": {
+    "source": "csplib",
+    "name": "Magic Squares",
+    "content": "An order $n$ magic square is a $n$ by $n$ matrix containing the numbers $1$\nto $n^2$, with each row, column and main diagonal equal the same\nsum. As well as finding magic squares, we are interested in the number\nof a given size that exist.  There are several interesting\nvariations. For example, we may insist on certain values in certain\nsquares (like in quasigroup completion) and ask if the magic square\ncan be completed. In a heterosquare, each row, column and diagonal\nsums to a different value. In an anti-magic square, the row, column\nand diagonal sums form a sequence of consecutive integers.",
+    "value_info": [
+      "`n`: The order of the magic square, given as an integer."
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`magic_sum`: The magic sum that all rows, columns, and diagonals in the magic square add up to.",
+        "example": "For instance, if the output is 15, the magic sum for this magic square is 15.",
+        "type": "int",
+        "size": ""
+      },
+      "var2": {
+        "descr": "`square`:  A 2D array representing the magic square where each cell contains a unique integer from 1 to ( n^2 ). Each row, column, and diagonal sums to the magic sum.",
+        "example": "For instance, the output of a order 3 magic square should be in this format `[[int,int,int],[int,int,int],[int,int,int]]`.",
+        "type": "List[List[int]]",
+        "size": "[n,n]"
+      }
+    },
+    "prob_type": "csp"
+  },
+  "22": {
+    "source": "csplib",
+    "name": "Bus Driver Scheduling",
+    "content": "Bus driver scheduling can be formulated as a set paritioning problem. We propose 12 set partitioning problems derived from small bus driver scheduling problems. These consist of a given set of tasks (pieces of work) to cover and a large set of possible shifts, where each shift covers a subset of the tasks and has an associated cost. We must select a subset of possible shifts that covers each piece of work once and only once: this is called a partition. Further,\nIn the driver scheduling (unlike air crew scheduling) the main aim is to reduce the number of shifts used in the solution partition and the total cost of the partition is secondary. To simplify the problem we have made the cost of each shift the same. This means that the goal is to minimise the number of shifts.",
+    "value_info": [
+      "\n`num_work`: The number of tasks (pieces of work) that must be covered, given as an integer.\n`num_shifts`: The number of possible shifts given as an integer. Each shift covers a subset of the tasks.\n`min_num_shifts`: The known minimum number of shifts required needed to cover all tasks exactly once, given as an integer.\n`shifts`: An array of sets of integers, where `shifts[i]` represents the set of task IDs (from 0 to `num_work - 1`) that shift `i` covers. The array is of length `num_shifts`"
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`total_shifts`: The total number of shifts used to cover all tasks. The goal is to minimize this value.",
+        "example": "For instance, the output `total_shifts=7` means that 7 shifts are used in the solution.",
+        "type": "int",
+        "size": ""
+      },
+      "var2": {
+        "descr": "`x`: An array of binary values representing whether a shift from `shifts` is selected (`1`) or not (`0`).",
+        "example": "For instance, in the output `x=[1,0,1,0]`, shifts 0 and 2 are selected.",
+        "type": "List[int]",
+        "size": "[num_shifts]"
+      }
+    },
+    "prob_type": "cop"
+  },
+  "23": {
+    "source": "csplib",
+    "name": "Magic Hexagon",
+    "content": "A magic hexagon consists of the numbers 1 to 19 arranged in a hexagonal pattern:\n\n<center><pre>\nA,B,C\nD,E,F,G\nH,I,J,K,L\nM,N,O,P\nQ,R,S\n</pre></center>\n\nWe have a constraint that all diagonals sum to 38. That is,\n\n<pre>\nA+B+C = D+E+F+G = ... = Q+R+S = 38,\nA+D+H = B+E+I+M = ... = L+P+S = 38,\nC+G+L = B+F+K+P = ... = H+M+Q = 38.",
+    "value_info": [],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`LD`: An array representing the numbers placed in the hexagon. The array `LD` contains the numbers assigned to each variable in the pattern `[a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s]`.",
+        "example": "For example, the output should follow the format `[int_a, int_b, int_c..., int_s]`, the numbers int_a, int_b, int_c, etc., are assigned to the variables `a`, `b`, `c`, etc., respectively, in the hexagon pattern.",
+        "type": "List[int]",
+        "size": "[19]"
+      }
+    },
+    "prob_type": "csp"
+  },
+  "24": {
+    "source": "csplib",
+    "name": "Langford's number problem",
+    "content": "Consider two sets of the numbers from 1 to 4. The problem is to arrange  the eight numbers in the two sets into a single sequence in which the two 1's appear one number apart, the two 2's appear two numbers apart, the two 3's appear three numbers apart, and the two 4's appear four numbers apart.\n\nThe problem generalizes to the L($k$,$n$) problem, which is to arrange\n$k$ sets of numbers 1 to $n$, so that each appearance of the number\n$m$ is $m$ numbers on from the last. For example, the L(3,9) problem\nis to arrange 3 sets of the numbers 1 to 9 so that the first two 1's\nand the second two 1's appear one number apart, the first two 2's and\nthe second two 2's appear two numbers apart, etc.",
+    "value_info": [
+      "`n`: The number of distinct numbers in each set, given as an integer.\n`k`: The number of sets, given as an integer."
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`solution`:  An array representing the sequence of numbers arranged according to the constraints of the L(k,n) problem. Each number ( m ) appears ( m ) positions apart from its next occurrence.",
+        "example": "For instance, solution of a L(2,4) problem should be given by `[2, _, _, 2, 1, _, 1, ...]`. The two 1's are separated by 1 position between them, the two 2's are separated by 2 positions between them, and so on.",
+        "type": "List[int]",
+        "size": "[k*n]"
+      }
+    },
+    "prob_type": "csp"
+  },
+  "28": {
+    "source": "csplib",
+    "name": "Balanced Incomplete Block Designs",
+    "content": "Balanced Incomplete Block Design (BIBD) generation is a standard combinatorial problem from design theory, originally used in the design of statistical experiments but since finding other applications such as cryptography. It is a special case of Block Design, which also includes Latin Square problems.\n\nBIBD generation is described in most standard textbooks on combinatorics. A BIBD is defined as an arrangement of $v$ distinct objects into $b$ blocks such that each block contains exactly $k$ distinct objects, each object occurs in exactly $r$ different blocks, and every two distinct objects occur together in exactly $\\lambda$ blocks. Another way of defining a BIBD is in terms of its incidence matrix, which is a $v$ by $b$ binary matrix with exactly $r$ ones per row, $k$ ones per column, and with a scalar product\nof $\\lambda$ between any pair of distinct rows. A BIBD is therefore specified by its parameters $(v,b,r,k,\\lambda)$. ",
+    "value_info": [
+      "`v`: The number of distinct objects, given as an integer.\n`k`: The number of distinct objects in each block, given as an integer.\n`lambda_val`: The number of blocks in which every two distinct objects occur together, given as an integer."
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`m`: A binary matrix of size `v` by `b` representing the BIBD. If `m[i, j] = 1`, then object `i` is in block `j`.",
+        "example": "For instance, in the output `m=[[1,1,0], [0,1,1], ...]`, block#1 contains objects {1,2}, block#2 contains objects {2,3}, and so on ",
+        "type": "List[List[int]]",
+        "size": "[v,b]"
+      }
+    },
+    "prob_type": "csp"
+  },
+  "32": {
+    "source": "csplib",
+    "name": "Maximum density still life",
+    "content": "This problem arises from the Game of Life, invented by John Horton Conway in the 1960s and popularized by Martin Gardner in his\nScientific American columns.\n\nLife is played on a squared board, considered to extend to infinity in all directions. Each square of the board is a cell, which at any time during the game is either alive or dead. A cell on the board has eight neighbours: [[0,0,0], [0,1,0], [0,0,0]]. The configuration of live and dead cells at time *t* leads to a new configuration at time *t+1* according to the rules of the game:\n\n- if a cell has exactly three living neighbours at time *t*, it is alive at time *t+1*\n- if a cell has exactly two living neighbours at time *t* it is in the same state at time *t+1* as it was at time *t*\n- otherwise, the cell is dead at time *t+1*\n\nA stable pattern, or *still-life*, is not changed by these rules. Hence, every cell that has exactly three live neighbours is alive, and every cell that has fewer than two or more than three live neighbours is dead. (An empty board is a still-life, for instance.)\n\nWhat is the densest possible still-life pattern, i.e. the pattern with the largest number of live cells, that can be fitted into an *n* x *n* section of the board, with all the rest of the board dead?",
+    "value_info": [
+      "`size`: The size of the board, given as an integer."
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`grid`:A `size` by `size` grid where the first and last two rows/columns are fixed as dead cells (0), and the central (`size`-4) by (`size`-4) section contains the live and dead cells of the still-life pattern. Each entry in the grid is either 0 (dead) or 1 (alive).",
+        "example": "For instance, `grid=[[0,0, ..., 0, 0],[0,0, ..., 0,0],[0, 0, 1, 0, 0, 0, 0], ...,[0, 0, ...,0, 0],[0, 0, ...,0, 0]]`, grid[2][2]=1 indicates cell (2,2) alive.",
+        "type": "List[List[int]]",
+        "size": "[size, size]"
+      }
+    },
+    "prob_type": "cop"
+  },
+  "34": {
+    "source": "csplib",
+    "name": "Warehouse Location Problem",
+    "content": "In the <i>Warehouse Location</i> problem (WLP), a company considers opening warehouses at some candidate locations in order to supply its existing stores.\nEach possible warehouse has the same maintenance cost, and a capacity designating the maximum number of stores that it can supply.\nEach store must be supplied by exactly one open warehouse.\n\nThe supply cost to a store depends on the warehouse.\nThe objective is to determine which warehouses to open, and which of these warehouses should supply the various stores, such that the sum of the maintenance and supply costs is minimized.",
+    "value_info": [
+      "`n_suppliers`: The number of candidate warehouse locations, given as an integer.\n`n_stores`: The number of stores to be supplied, given as an integer.\n`building_cost`: The maintenance cost for opening each warehouse, given as an integer.\n`capacity`: The capacities of the warehouses, given as a list of integers of size `n_suppliers`. Each integer represents the maximum number of stores that a corresponding warehouse can supply.\n`cost_matrix`: The supply cost matrix, given as a 2D array of size `n_stores` by `n_suppliers`. Each element represents the cost of supplying a store from a specific warehouse."
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`total_cost`: An integer value which includes both the building costs for open warehouses and the supply costs for the stores.",
+        "example": "For instance, in the output `total_cost = 100`, the total cost of opening the warehouses and supplying the stores is 100.",
+        "type": "int",
+        "size": ""
+      },
+      "var2": {
+        "descr": "`supplier`: An array of integers indicating the warehouse assigned to supply each store. `supplier[i]` shows the warehouse assigned to store `i`.",
+        "example": "For instance, in the output `supplier=[5, 2, 5, ...]`, Store 1 is supplied by warehouse 5, store 2 by warehouse 2, store 3 by warehouse 5, and so on.",
+        "type": "List[int]",
+        "size": "[n_stores]",
+        "index": "1-based"
+      },
+      "var3": {
+        "descr": "`cost`: An array of integers indicating the supply cost for each store based on the assigned warehouse. `cost[i]` shows the supply cost for store `i`.",
+        "example": "For instance, in the output `cost = [30, 27, 70, ...]`, the cost to supply store 1 is 30, store 2 is 27, store 3 is 70, and so on.",
+        "type": "List[int]",
+        "size": "[n_stores]"
+      },
+      "var4": {
+        "descr": "`open`: An array of binary values indicating whether each warehouse is open (`1`) or closed (`0`). `open[i]` is `1` if warehouse `i` is open.",
+        "example": "For instance, in the output `open = [1, 0, 1]`, warehouses 1, 3 are open, while warehouse 2 is closed.",
+        "type": "List[int]",
+        "size": "[n_suppliers]"
+      }
+    },
+    "prob_type": "cop"
+  },
+  "39": {
+    "source": "csplib",
+    "name": "The Rehearsal Problem",
+    "content": "The Rehearsal Scheduling Problem</H3>\n\nThis problem originated at Lancaster University in the 1970s. It is reported to have been devised by a member of staff in the Management Science department, who was a member of an amateur orchestra and formalized the problem whilst waiting to play during a rehearsal.\n\nA concert is to consist of nine pieces of music of different durations each involving a different combination of the five members of the orchestra.\n\nPlayers can arrive at rehearsals immediately before the first piece in which they are involved and depart immediately after the last piece in which they are involved. The problem is to devise an order in which the pieces can be rehearsed  so as to minimize the total time that players are waiting to play, i.e. the total time when players are present but not currently playing.\n\nIn the table below, 1 indicates that the player is required for the corresponding  piece, 0 otherwise. The duration (i.e. time required to rehearse each piece) is in some unspecified time units.| Piece      | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |\n|------------|---|---|---|---|---|---|---|---|---|\n| Player 1   | 1 | 1 | 0 | 1 | 0 | 1 | 1 | 0 | 1 |\n| Player 2   | 1 | 1 | 0 | 1 | 1 | 1 | 0 | 1 | 0 |\n| Player 3   | 1 | 1 | 0 | 0 | 0 | 0 | 1 | 1 | 0 |\n| Player 4   | 1 | 0 | 0 | 0 | 1 | 1 | 0 | 0 | 1 |\n| Player 5   | 0 | 0 | 1 | 0 | 1 | 1 | 1 | 1 | 0 |\n| Duration   | 2 | 4 | 1 | 3 | 3 | 2 | 5 | 7 | 6 |\n\n\nFor example, if the nine  pieces were rehearsed in numerical order as given above, then the total waiting time would be:\n\nPlayer 1: 1+3+7=11\n\nPlayer 2: 1+5=6\n\nPlayer 3: 1+3+3+2=9\n\nPlayer 4: 4+1+3+5+7=20\n\nPlayer 5: 3\n\ngiving a total of 49 units.",
+    "value_info": [
+      "`num_pieces`: The number of music pieces to be rehearsed, given as an integer.\n`num_players`: The number of players in the orchestra, given as an integer.\n`duration`: The duration of each music piece, given as an array of integers of size `num_pieces`. Each integer represents the time required to rehearse the corresponding piece.\n`rehearsal`: The rehearsal requirements matrix, given as a 2D array of size `num_players` by `num_pieces` containing 0s and 1s. Each element indicates whether a player is required for the corresponding piece (1) or not (0)."
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`order`: An array of integers represents the optimal order in which the pieces are rehearsed. Each number corresponds to a piece of music, and the array shows the order in which they should be performed to minimize the total waiting time.",
+        "example": "For instance, the output `order=[3, 5, 2, ...]` indicates the optimal rehearsal order for the pieces is piece 3 first, followed by piece 5, then piece 2, and so on.",
+        "type": "List[int]",
+        "size": "[num_pieces]"
+      },
+      "var2": {
+        "descr": "`total_waiting_time`: An integer represents the total waiting time unit for all players combined, which is the objective to minimize.",
+        "example": "For instance, the output `total_waiting_time=9` indicates that the total waiting time for all players is 9 time units",
+        "type": "int",
+        "size": ""
+      }
+    },
+    "prob_type": "cop"
+  },
+  "41": {
+    "source": "csplib",
+    "name": "The n-Fractions Puzzle",
+    "content": " Find 9 distinct non-zero digits that satisfy:\n\n```\nA    D    G\n-- + -- + -- == 1\nBC   EF   HI\n```\n\nwhere `BC` is shorthand for `10B+C`, `EF` for `10E+F` and `HI` for `10H+I`.",
+    "value_info": [],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`vars`: An array containing values of the variables [A, B, C, D, E, F, G, H, I] in the solution.",
+        "example": "For instance, in the output `vars=[7, 6, 8, ...]`, A=7, B=6, C=8, and so on.",
+        "type": "List[int]",
+        "size": "[9]"
+      }
+    },
+    "prob_type": "csp"
+  },
+  "44": {
+    "source": "csplib",
+    "name": "Steiner triple systems",
+    "content": "The ternary Steiner problem of order N consists of finding a set of $N.(N-1)/6$ triples of distinct integer elements in $\\\\{1,\\dots,N\\\\}$ such that any two triples have at most one common element. It is a hypergraph problem coming from combinatorial mathematics where N modulo 6 has to be equal to 1 or 3. One possible solution for $N=7$ is {{1, 2, 3}, {1, 4, 5}, {1, 6, 7}, {2, 4, 6}, {2, 5, 7}, {3, 4, 7}, {3, 5, 6}}. The solution contains $7*(7-1)/6 = 7$ triples.",
+    "value_info": [
+      "`N`: The order of the ternary Steiner problem, given as an integer."
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`sets`: A 2d array where each sub-array contains 3 distinct integers. These sets represent the solution to the Steiner problem.",
+        "example": "For instance, `Sets= [[1,2,3], [1,4,5], ...]` shows several triples, each contains 3 distinct integers.",
+        "type": "List[List[int]]",
+        "size": "[N*(N-1)/6,3]"
+      }
+    },
+    "prob_type": "csp"
+  },
+  "49": {
+    "source": "csplib",
+    "name": "Number Partitioning",
+    "content": "This problem consists in finding a partition of numbers $1..N$ into two sets A and B such that:\n\n1. A and B have the same cardinality\n2. sum of numbers in $A$ = sum of numbers in $B$\n3. sum of squares of numbers in $A$ = sum of squares of numbers in $B$\n\nThere is no solution for $N < 8$.\n\nHere is an example for$ N = 8$:$ A = (1,4,6,7)$ and $B = (2,3,5,8)$\n\nThen from $N \\>= 8$, there is no solution if $N$ is not a multiple of $4$.",
+    "value_info": [
+      "`n`: The upper limit of the range of numbers to be partitioned, given as an integer."
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`res`:An array containing two subarrays: the first subarray contains numbers partitioned into set A, and the second subarray contains numbers partitioned into set B.",
+        "example": "For instance, the output `res=[[1,4,6,7], [2,3,5,8]]` indicates numbers 1,4,6,7 are partitioned into set A, and numbers 2,3,5,8 are partitioned into set A",
+        "type": "List[List[int]]",
+        "size": "[2,n/2]"
+      }
+    },
+    "prob_type": "csp"
+  },
+  "50": {
+    "source": "csplib",
+    "name": "Diamond-free Degree Sequences",
+    "content": "Given a simple undirected graph $G = (V,E)$, where $V$ is the set of vertices and $E$ the set of undirected edges, the edge {$u,v$} is in $E$ if and only if vertex u is adjacent to vertex $v  \\in G$. The graph is simple in that there are no loop edges, i.e. we have no edges of the form {$v,v$}. Each vertex $v \\in V$ has a degree dv i.e. the number of edges incident on that vertex. Consequently a graph has a degree sequence $d1,...,dn$, where $d_i >= d_{i+1}$. A diamond is a set of four vertices in $V$ such that there are at least five edges between those vertices. Conversely, a graph is diamond-free if it has no diamond as an induced subgraph, i.e. for every set of four vertices the number of edges between those vertices is at most four.\n\nIn our problem we have additional properties required of the degree sequences of the graphs, in particular that the degree of each vertex is greater than zero (i.e. isolated vertices are disallowed), the degree of each vertex is modulo $3$, and the sum of the degrees is modulo $12$ (i.e. $|E|$ is modulo $6$).\n\nThe problem is then for a given value of $n$, produce all unique degree sequences $d1,...,dn$ such that\n\n* $d_i \\ge d_{i+1}$\n* each degree $d_i > 0$ and $d_i$ is modulo $3$\n* the sum of the degrees is modulo $12$\n* there exists a simple diamond-free graph with that degree sequence.",
+    "value_info": [
+      "\n`n`: The number of vertices in the graph, given as an integer."
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`degrees`: An array of integers representing the degree sequence of the graph, where each element is the degree (number of incident edges) of each vertex i in the graph.",
+        "example": "For instance, the output `degrees=[6, 6, 3, ...]` indicates the first two vertices have a degree of 6, the next vertex has a degree of 3, and so on.",
+        "type": "List[int]",
+        "size": "[n]"
+      },
+      "var2": {
+        "descr": "`x`: A 2d array of binary variables representing whether there is an edge between vertex i and vertex j in the graph. If x[i, j] = 1, there is an edge between i and j; if x[i, j] = 0, there is no edge.",
+        "example": "For instance, the output `x=[[0, 1, 1], [1, 0, 0],[1, 0, 0]]`, vertex 1 is connected to vertex 2 and vertex 3, but not to others.",
+        "type": "List[List[int]]",
+        "size": "[n,n]"
+      }
+    },
+    "prob_type": "csp"
+  },
+  "53": {
+    "source": "csplib",
+    "name": "Graceful Graphs",
+    "content": "A labelling $f$ of the nodes of a graph with $q$ edges is graceful if $f$ assigns each\nnode a unique label from $\\{0, 1, \\ldots , q\\}$ and when each edge $xy$ is labelled with\n$|f(x)-f(y)|$, the edge labels are all different.",
+    "value_info": [
+      "\n`m`: The number of edges in the graph, given as an integer.\n`n`: The number of nodes in the graph, given as an integer.\n`graph`: The adjacency list of the graph, given as a 2D array of size `m` by 2, where each pair represents an edge between two nodes."
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`nodes`: An array of integers ranging from 0 to `m`. Each entry at index i represents the unique label assigned to node i.",
+        "example": "For instance, the output `nodes=[0, 1, 5, ...]` means node 1 is labeled 0, node 2 is labeled 1, node 3 is labeled 5, and so on.",
+        "type": "List[int]",
+        "size": "[n]"
+      },
+      "var2": {
+        "descr": "`edges`: An array of integer variables ranging from 1 to `m`. Each entry represents the label assigned to edge i, defined as the absolute difference between the labels of the two nodes connected by this edge.",
+        "example": "For instance, the output `edges=[1, 5, 16, ...]`  indicates the first edge has a label of 1 (absolute difference of the node labels it connects), the second edge has a label of 5, and so on.",
+        "type": "List[int]",
+        "size": "[m]"
+      }
+    },
+    "prob_type": "csp"
+  },
+  "54": {
+    "source": "csplib",
+    "name": "N-Queens",
+    "content": "Can $n$ queens (of the same colour) be placed on a $n\\times n$ chessboard so that none of the  queens can attack each other?\n\nIn chess a queen attacks other squares on the same row, column, or either diagonal as itself. So the $n$-queens problem is to find a set of $n$ locations on a chessboard, no two of which are on the same row, column or diagonal.",
+    "value_info": [
+      "`n`: The size of the chessboard and the number of queens, given as an integer."
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`queens`: An array representing the positions of the queens on the chessboard. The value at each index `i` represents the row position of the queen in the ( i )-th column.",
+        "example": "For instance, in the output `[2, 4, 1, 3]` for `n=4`, the queens are positioned as follows: The queen in column 1 is in row 2. The queen in column 2 is in row 4. The queen in column 3 is in row 1. The queen in column 4 is in row 3.",
+        "type": "List[int]",
+        "size": "[n]"
+      }
+    },
+    "prob_type": "csp"
+  },
+  "56": {
+    "source": "csplib",
+    "name": "Synchronous Optical Networking (SONET) Problem",
+    "content": "In the SONET problem we are given a set of nodes, and for each pair of nodes\nwe are given the *demand* (which is the number of channels required to carry network traffic\nbetween the two nodes). The demand may be zero, in which case the two nodes do\nnot need to be connected.\n\nA SONET *ring* connects a set of nodes. A node is installed on a ring using a piece of equipment\ncalled an add-drop multiplexer (ADM).  Each node may be installed on more than one\nring. Network traffic can be transmitted from\none node to another only if they are both installed on the same ring.\nEach ring has an upper limit on the number of nodes, and a limit on the number\nof channels. The demand of a pair of nodes may be split between multiple rings.\n\nThe objective is to minimise the total number of ADMs used while satisfying all demands.",
+    "value_info": [
+      "`r`: The maximum number of rings that can be used in the solution, given as an integer.\n`n`: The number of nodes (clients) in the network, given as an integer.\n`demand`: The demand matrix, given as a 2D array of size `n` by `n`, where `demand[i][j]` represents the number of channels required between node `i` and node `j`. A value of 0 means no direct demand.\n`capacity_nodes`: An array of integers of length `r`, where `capacity_nodes[k]` indicates the maximum number of nodes that ring `k` can accommodate."
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`objective`: The total number of ADMs used in the solution.",
+        "example": "For instance, in the output `objective= 5`, the solution uses a total of 5 ADMs to connect the nodes across the rings.",
+        "type": "int",
+        "size": ""
+      },
+      "var2": {
+        "descr": "`rings`: A 2D array of integers representing which nodes are connected to which rings. Each row represents a ring, and each column represents a node. A value of 1 indicates that the node is connected to that ring, while 0 indicates it is not.",
+        "example": "For instance, in the output `[[0, 1, 1, ...], [1, 1, 0, ...], [0, 0, 0, ...]]`, the first row indicates that nodes 2 and 3 are connected to the first ring. The second row shows that nodes 1 and 2 are connected to the second ring, and so on.",
+        "type": "List[List[int]]",
+        "size": "[r,n]"
+      }
+    },
+    "prob_type": "cop"
+  },
+  "57": {
+    "source": "csplib",
+    "name": "Killer Sudoku",
+    "content": "Killer Sudoku is a puzzle played on a 9 by 9 grid containing 81 cells.\nThe cells are filled in with numbers from the set {1...9}.\nEach row and column must contain all numbers {1...9}. Each of the 9\nnon-overlapping $3\\times 3$ subsquares (named *boxes*) must also contain all numbers {1...9}.\n\nEach Killer Sudoku puzzle has a set of *cages*. A cage is a set of contiguous cells\nand a total; the numbers in the cells must add up to the total. Also, the cells in\na cage cannot contain the same number more than once. The cages do not overlap,\nand they cover all cells. Cages typically contain two to four cells.\nTypically a Killer Sudoku puzzle will have exactly one solution.",
+    "value_info": [
+      "`n`: The size of the Sudoku grid, given as an integer (9).\n`num_p`: The number of segments (cages), given as an integer.\n`num_hints`: The maximum number of hints per segment, given as an integer.\n`max_val`: The maximum value for hints, given as an integer.\n`P`: The segments and their corresponding sums, given as a 2D array of size `num_p` by `2 * num_hints + 1`, where each row represents a segment with its cell coordinates and the total sum in the format `P[p] = [row1, col1, row2, col2, ..., total_sum]`. Note that the coordinates in `P` are 1 based instead of 0 based. "
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`grid`: A 2D array of integers where each entry represents the number placed in the cell at row i and column j.",
+        "example": "For instance, in the output `grid=[[2, 1, 5,...], [3, 6, 8,...], ...]`, value at (0,0) is 2, the value at (1,2) is 6, and so on.",
+        "type": "List[List[int]]",
+        "size": "[n,n]"
+      }
+    },
+    "prob_type": "csp"
+  },
+  "67": {
+    "source": "csplib",
+    "name": "Quasigroup Completion",
+    "content": "An order $m$ quasigroup is a Latin square of size $m$. That is, a $m$ by $m$ multiplication table in which each element occurs once in every row and column. For example,\n```\n1        2       3       4\n4        1       2       3\n3        4       1       2\n2        3       4       1\n```\nis an order 4 quasigroup.\n\nProblem 3 of the CSPlib asks about the existence of quasigroups. This variant asks to complete a quasigroup given some of its entries. For example, partially specified quasigroup\n```1 x x 4\nx 2 x x\n3 x 1 x\nx 3 x x```\ncould be completed as the first example above.",
+    "value_info": [
+      "`N`: The size of the quasigroup (Latin square), given as an integer.\n`start`: The initial board configuration, given as a 2D array of size `N` by `N` containing integers from 0 to `N`, where 0 represents an empty cell to fill in."
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`puzzle`: A 2D array representing the completed quasigroup. Each row and column contains each number from 1 to N exactly once.",
+        "example": "For instance, the output `puzzle=[[1, 2, 3, 4], [3, 4, 1, 2], ...]` shows the first two rows of a valid quasigroup of order 4.",
+        "type": "List[List[int]]",
+        "size": "[N,N]"
+      }
+    },
+    "prob_type": "csp"
+  },
+  "74": {
+    "source": "csplib",
+    "name": "Maximum Clique",
+    "content": "Given a simple undirected graph $G = (V,E)$, where $V$ is the set of vertices and $E$ the set of undirected edges, a clique is a subset of $V$ such that each distinct pair of vertices in this subset are adjacent. The maximum clique problem is to find a clique of largest cardinality within a given graph. (The related clique enumeration problem is to enumerate all maximal cliques---that is, cliques which cannot be extended by adding an additional vertex.)",
+    "value_info": [
+      "`n`: The number of vertices in the graph, given as an integer.\n`adj`: The adjacency matrix of the graph, given as a 2D array of size `n` by `n` containing integers (0s and 1s). Each element \\( adj[i][j] \\) is 1 if there is an edge between vertex \\( i \\) and vertex \\( j \\), and 0 otherwise. The matrix is symmetric."
+    ],
+    "ref_sol_format": {
+      "var1": {
+        "descr": "`c`: An array representing which vertices are included in the maximum clique. Each entry in the array is either `1` (vertex is in the clique) or `0` (vertex is not in the clique).",
+        "example": "For instance, in the output `c = [0, 1, 1,...]`, the vertices 2 and 3 are included in the maximum clique, and so on.",
+        "type": "List[int]",
+        "size": "[n]"
+      },
+      "var2": {
+        "descr": "`size`: An integer representing the number of vertices in the maximum clique.",
+        "example": "For instance, in the output `size = 3`, the maximum clique consists of 3 vertices.",
+        "type": "int",
+        "size": ""
+      }
+    },
+    "prob_type": "cop"
+  }
+}

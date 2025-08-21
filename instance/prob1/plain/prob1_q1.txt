@@ -1,0 +1,7 @@
+numcars: 10
+numoptions: 5
+numclasses: 6
+numberPerClass: [1, 1, 2, 2, 2, 2]
+optionsRequired: [[1, 0, 1, 1, 0], [0, 0, 0, 1, 0], [0, 1, 0, 0, 1], [0, 1, 0, 1, 0], [1, 0, 1, 0, 0], [1, 1, 0, 0, 0]]
+windowSize: [2, 3, 3, 5, 5]
+optMax: [1, 2, 1, 2, 1]

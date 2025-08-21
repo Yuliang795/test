@@ -1,0 +1,10 @@
+% **Condition on \( n \)**: \( n \) must satisfy \( n \mod 6 = 1 \) or \( n \mod 6 = 3 \).
+
+% ### Problem Description:
+% The ternary Steiner problem of order \( n \) involves finding a set of triples (3-element subsets) of distinct integers within the set \(\{1, 2, \ldots, n\}\) that meet the following criteria:
+% 1. **Number of Triples**: The number of triples must be \( \frac{n(n-1)}{6} \).
+% 2. **Distinct Elements within Triples**: Each triple must consist of distinct elements.
+% 3. **Pairwise Condition**: Any two triples can have at most one common element.
+% 4. **Condition on \( n \)**: \( n \) must satisfy \( n \mod 6 = 1 \) or \( n \mod 6 = 3 \).
+
+N=3;
