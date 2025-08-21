@@ -58,7 +58,7 @@ The checker function returns results in two strings:
 
 ## Citation
 ```bibtex
-@inproceedings{song2025do,
+@inproceedings{song2025llmcp,
   title={Do LLMs Understand Constraint Programming? Zero-Shot Constraint Programming Model Generation Using LLMs},
   author={Song, Yuliang and Cohen, Eldan},
   booktitle={Proceedings of the 19th Learning and Intelligent Optimization Conference (LION-25)},
