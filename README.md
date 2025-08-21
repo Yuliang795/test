@@ -37,8 +37,8 @@ The evluation suite is composed of a set of checker functions to verify the corr
  (2) `hypothesis_solution` - contains solution variables in the predefined formats.
 
 The checker function returns results in two strings:
- - "pass" if all constraints checked are satisfied.
- - "optimal" if the solution is optimal (for COP problems).
+ - `"pass"` if all constraints checked are satisfied.
+ - `"optimal"` if the solution is optimal (for COP problems).
 
 
 ### 📏Output Format Checker
