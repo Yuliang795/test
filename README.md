@@ -19,8 +19,8 @@ This repository contains materials for the paper:
 
 ### 📂Dataset
 Each entry in the dataset JSON file corresponds to a problem instance, keyed by a **problem ID** as in CSPLib.
-Each problem is represented as a dictionary with the following fields:
 
+Each problem is represented as a dictionary with the following fields:
 * **`source`**: Origin of the problem (e.g., `"csplib"`).
 * **`name`**: Name of the problem.
 * **`content`**: Problem description.
